@@ -13,7 +13,7 @@ class User extends CI_Controller
     public function index()
     {
         $data['title'] = 'My Profile';
-        $data['user'] = $this->db->get_where('user', ['email' =>
+        $data['user'] = $this->db->where('user.role_id = user_role.id')->get_where('user, user_role', ['email' =>
         $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/header', $data);
