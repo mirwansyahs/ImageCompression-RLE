@@ -286,7 +286,7 @@ class Data extends CI_Controller
 
             if (!$this->upload->do_upload('image')) {
                 $error = array('error' => $this->upload->display_errors());
-
+                echo $error['error'];
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/topbar', $data);
@@ -309,7 +309,7 @@ class Data extends CI_Controller
 
                 $this->db->insert('user', $data);
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Data User Added!</div>');
-                redirect('data/user');
+                // redirect('data/user');
             }
         }
     }
