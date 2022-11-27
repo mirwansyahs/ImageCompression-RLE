@@ -254,7 +254,9 @@ class Data extends CI_Controller
         $this->load->model('Data_model', 'data');
 
         $data['TambahUser'] = $this->data->getTambahDataUser();
-        $data['datauser'] = $this->db->get('user')->result_array();
+        
+        $this->load->model('Data_model', 'role');
+        $data['datauser'] = $this->role->getSubRole();
 
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('email', ' Email', 'required|trim|valid_email|is_unique[user.email]', [
@@ -278,15 +280,15 @@ class Data extends CI_Controller
         } else {
             $config['upload_path']          = './assets/img/profile/';
             $config['allowed_types']        = 'gif|jpg|png';
-            $config['max_size']             = 100;
-            $config['max_width']            = 1024;
-            $config['max_height']           = 768;
+            // $config['max_size']             = 100;
+            // $config['max_width']            = 1024;
+            // $config['max_height']           = 768;
 
             $this->load->library('upload', $config);
 
             if (!$this->upload->do_upload('image')) {
                 $error = array('error' => $this->upload->display_errors());
-                echo $error['error'];
+                // echo $error['error'];
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/topbar', $data);
@@ -309,7 +311,7 @@ class Data extends CI_Controller
 
                 $this->db->insert('user', $data);
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Data User Added!</div>');
-                // redirect('data/user');
+                redirect('data/user');
             }
         }
     }
